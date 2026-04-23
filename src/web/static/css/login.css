@@ -1,0 +1,154 @@
+
+/* Стили для модального окна с результатом действия (нужно для действия кнопки correction-btn) */
+.notify-modal {
+  opacity: 0;
+  top: 8rem;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.notify-modal > span {
+  color: var(--base-text-color);
+  font-size: var(--base-font-size);
+}
+
+.error-modal {
+  background-color: #FF5050;
+}
+
+form {
+  --form-width: 75%;
+  --form-height: 50vh;
+
+  margin-top: 25vh;
+  width: var(--form-width); 
+  height: var(--form-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #34D0B6;
+  gap: 2rem;
+  padding: var(--base-section-padding);
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+form > h1 {
+  --h1-font-size: 2.5rem;
+
+  color: var(--base-text-color);
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  font-size: var(--h1-font-size);
+}
+
+form > input {
+  --form-input-font-size: 2rem;
+  width: 80%;
+  background-color: #E8E8E8;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: var(--form-input-font-size);
+  padding-left: 1rem;
+}
+
+form > button {
+  --form-button-font-size: 1.5rem;
+  margin-top: 2rem;
+  background-color: var(--accient-color);
+  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+  color: var(--base-text-color);
+  font-size: var(--form-button-font-size);
+  font-family: "Raleway Bold";
+  border: 1px  solid transparent;
+  border-radius: 5px;
+}
+
+@media(min-width: 700px) {
+  form {
+    --form-width: 60%;
+    --form-height: 40vh;
+  }
+}
+
+
+@media(min-width: 1020px) and (max-width: 1920px) {
+  form {
+    --form-width: 40%;
+    --form-height: 40vh;
+  }
+
+  form > h1 {
+    --h1-font-size: 3rem;
+  }
+
+  form > input {
+    --form-input-font-size: 2.5rem;
+  }
+
+  form > button {
+    --form-button-font-size: 2.5rem;
+  }
+}
+
+
+@media(min-width: 1921px) and (max-width: 2560px) {
+
+  form {
+    --form-width: 35%;
+  }
+
+  form > h1 {
+    --h1-font-size: 3.5rem;
+  }
+
+  form > input {
+    --form-input-font-size: 3rem;
+  }
+
+  form > button {
+    --form-button-font-size: 3rem;
+  }
+}
+
+
+@media(min-width: 2561px) and (max-width: 3100px) { 
+  form {
+    --form-width: 35%;
+  }
+
+  form > h1 {
+    --h1-font-size: 4rem;
+  }
+
+  form > input {
+    --form-input-font-size: 3.5rem;
+  }
+
+  form > button {
+    --form-button-font-size: 3.5rem;
+  }
+}
+
+
+@media(min-width: 3101px) { 
+  form {
+    --form-width: 35%;
+  }
+
+  form > h1 {
+    --h1-font-size: 4.5rem;
+  }
+
+  form > input {
+    --form-input-font-size: 4rem;
+  }
+
+  form > button {
+    --form-button-font-size: 4rem;
+  }
+}

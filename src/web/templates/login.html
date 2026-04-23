@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="static/css/login.css">
+  <link rel="stylesheet" href="static/css/index.css">
+</head>
+<body>
+  <main>
+    {% if message %}
+    <div  class="notify-modal error-modal">
+      <span>{{ message }}</span>
+      </div>
+    {% endif %}
+   <form method="post">
+     <h1>Login</h1>
+     <input type="text" placeholder="YourLogin" name="login" required>
+     <input type="password" placeholder="YourPassword" name="password" required>
+     <button type="submit">Login</button>
+   </form>
+  </main>
+  <script type="module" src="../static/js/login/main.js"></script>
+</body>
+</html>

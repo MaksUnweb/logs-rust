@@ -1,0 +1,30 @@
+#hello-section, 
+#info-text{
+  width: var(--base-section-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+#hello-section {
+  margin-top: 20vh;
+}
+
+#hello-section,
+#info-text> h1 {
+  font-size: var(--title-font-size);
+  font-family: "Raleway Bold";
+}
+
+#hello-section,
+#info-text> span {
+  font-size: var(--base-font-size);
+}
+
+#hello-section,
+#info-text> img {
+  width: 80%;
+  height: auto;
+}

@@ -1,0 +1,285 @@
+/* Стили для секции приветствия: */
+#hello-section
+{
+  margin-top: 15vh;
+  width: var(--base-section-size);
+  min-height: 12rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: repeat(1, 1fr);
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: 0px 6px 7px 1px rgba(0, 105, 87, 0.25);
+}
+
+
+#hello-section > span {
+  justify-self: start;
+  margin-left: 1rem;
+  font-size: var(--title-font-size);
+  font-family: "Raleway Bold";
+}
+
+#hello-section > .admin {
+  --admin-margin-right: 1rem;
+  margin-right: var(--admin-margin-right);
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  justify-self: end;
+}
+
+#hello-section > .admin > span {
+  font-size: var(--base-font-size);
+  font-family: "Raleway Bold";
+}
+
+#hello-section > .admin > .background-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00A287;
+  border: 1px solid transparent;
+  border-radius: 50px;
+}
+
+#hello-section > .admin > .background-avatar > svg {
+  --svg-sizes: 40px;
+
+  width: var(--svg-sizes);
+  height: var(--svg-sizes);
+}
+
+/* Стили для секции состояния базы данных */
+
+#database-speed-section{
+  width: var(--base-section-size);
+  min-height: 8rem;
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  grid-template-rows: repeat(1, 1fr);
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: 0px 6px 7px 1px rgba(0, 105, 87, 0.25);
+  gap: 1rem;
+  padding: 4rem 0rem 6rem 0rem;
+}
+
+
+#database-speed-section > .first-database {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  margin-left: 1rem;
+  gap: 2.5rem;
+}
+
+#database-speed-section > .first-database > .class-title > span {
+  font-size: var(--title-font-size);
+  font-family: "Raleway Bold";
+}
+
+#database-speed-section > .first-database > .info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#database-speed-section > .first-database > .info > span {
+  font-size: var(--base-font-size);
+}
+
+#database-speed-section > button {
+  
+  --button-margin-right: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: end;
+  justify-content: center;
+  margin-right: var(--button-margin-right);
+  font-size: var(--button-font-size);
+  background-color: var(--accient-color);
+  color: var(--base-text-color);
+  font-family: "Raleway Bold";
+  gap: 1rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  border-radius: 5px;
+}
+
+/* Стили для секции с последними проблемами: */
+#past-problems-section {
+  width: var(--base-section-size);
+  min-height: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: 0px 6px 7px 1px rgba(0, 105, 87, 0.25);
+  gap: 1rem;
+  padding: 3rem 0rem 6rem 0rem;
+}
+
+#past-problems-section > .title {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  align-items: center;
+}
+
+#past-problems-section > .title > span {
+  justify-self: start;
+  margin-left: 1rem;
+  font-size: var(--title-font-size);
+  font-family: "Raleway Bold";
+}
+
+#past-problems-section > .title > .state {
+  justify-self: end;
+  margin-right: 1rem;
+}
+
+#past-problems-section > .title > .state > .indicator-background {
+  border: 1px solid transparent;  
+  border-radius: 50px;
+  padding: 0.3rem;
+}
+
+#past-problems-section > .title > .state > .error-background > svg {
+  --width: 23px;
+  --height: 20px;
+  width: var(--width);
+  height: var(--height);
+}
+
+#past-problems-section > .title > .state > .success-background > svg {
+  --size: 24px
+  width: var(--size);
+  height: var(--size);
+}
+
+#past-problems-section > .title > .state  > .error-background {
+  background-color: #D82D43;
+}
+
+#past-problems-section > .title > .state  > .success-background {
+  background-color: #00A287;
+}
+
+#past-problems-section > .problems-cards {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+#past-problems-section > .problems-cards > .problem-card {
+  --problem-card-padding: 0.5rem 0rem 0.5rem 0rem;
+
+  width: 100%;
+  background-color: var(--accient-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 5px;
+  box-shadow: 0px 6px 5px 1px rgba(0, 0, 0, 0.25);
+  padding: var(--problem-card-padding);
+}
+
+
+#past-problems-section > .problems-cards > .problem-card > svg {
+  margin-left: 1rem;
+}
+
+#past-problems-section > .problems-cards > .problem-card > span {
+  font-size: var(--base-font-size);
+  width: var(--problem-card-span-width);
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: var(--base-text-color);
+  font-weight: 800;
+}
+
+#past-problems-section > .problems-cards > .none-problems {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#past-problems-section > .problems-cards > .none-problems > span {
+  font-size: var(--base-font-size);
+}
+
+/* Стили для модального окна уведомлений */
+.notify-modal {
+  opacity: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 4rem;
+  padding: 1rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.notify-modal > p {
+  font-size: var(--base-font-size);
+  color: var(--base-text-color);
+}
+
+.success-modal {
+  background-color: #8BEA00;
+}
+
+.error-modal {
+  background-color: #FF5050;
+}
+
+@media(min-width: 1024px) {
+  #hello-section > .admin {
+    --admin-margin-right: 10%;
+  }
+  
+  #database-speed-section > button {
+    --button-margin-right: 10%;
+  }
+}
+
+@media(min-width: 1440px){
+  #past-problems-section > .title > .state > .error-background > svg {
+    --width: 26px;
+    --height: 23px;
+  }
+  
+  #past-problems-section > .title > .state > .success-background > svg {
+    --size: 28px
+  }
+}
+
+@media(min-width: 2000px) {
+  #hello-section > .admin > .background-avatar > svg {
+    --svg-sizes: 60px;
+  }
+  
+  #past-problems-section > .title > .state > .error-background > svg {
+    --width: 33px;
+    --height: 30px;
+  }
+  
+  #past-problems-section > .title > .state > .success-background > svg {
+    --size: 34px
+  }
+  
+}

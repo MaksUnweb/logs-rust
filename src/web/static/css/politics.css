@@ -1,0 +1,27 @@
+#hello-section, 
+#text-policy{
+  width: var(--base-section-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+#hello-section {
+  margin-top: 20vh;
+}
+
+#hello-section,
+#text-policy > h1 {
+  font-size: var(--title-font-size);
+  font-family: "Raleway Bold";
+}
+
+#hello-section > span {
+  font-size: var(--base-font-size);
+}
+#text-policy > ul > li {
+  font-size: var(--base-font-size);
+  line-height: 3.5rem;
+}

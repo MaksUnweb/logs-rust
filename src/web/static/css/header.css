@@ -1,0 +1,140 @@
+header {
+  --header-width: 90%;
+
+  width: var(--header-width);
+  display: flex;
+  background-color: #00A287; 
+  height: 5rem;
+  position: fixed;
+  top: 1rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+
+/* Стили для desktop header: */
+header > .desktop-header {
+  width: 100%;
+  display: none;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: repeat(1, 1fr);
+  align-items: center;
+}
+
+
+header > .desktop-header > .logo {
+  display: flex;
+  justify-self: start;
+  align-items: center;
+  margin-left: 2rem;
+  padding: 0.1rem;
+  background-color: #D9D9D9;
+  border: 1px solid transparent;
+  border-radius: 50px;
+}
+
+
+header > .desktop-header > .logo > img{
+  width: 4rem;
+  height: auto;
+}
+
+header > .desktop-header > nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: end;
+  margin-right: 2rem;
+  gap: 2rem;
+}
+
+header > .desktop-header > nav > a {
+  color: var(--base-text-color);
+  font-size: var(--small-header-font-size);
+  font-family: "Raleway Bold";
+}
+
+
+/* Стили для мобильного header: */
+header > .mobile-header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  align-items: center;
+}
+
+header > .mobile-header > .logo {
+  display: flex;
+  justify-self: start;
+  align-items: center;
+  margin-left: 2rem;
+  padding: 0.1rem;
+  background-color: #D9D9D9;
+  border: 1px solid transparent;
+  border-radius: 50px;
+
+}
+
+header > .mobile-header > .logo > img {
+  width: 4rem;
+  height: auto;
+}
+
+
+header > .mobile-header > svg {
+  justify-self: end;
+  margin-right: 2rem;
+  width: 36px;
+  height: 27px;
+}
+
+header > .header-modal {
+  top: 1rem;
+  right: 0;
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  height: 30vh;
+  width: 50vw;
+  background-color: #00A287; 
+  transform: translateX(50vw);
+}
+
+header > .header-modal > .exit-header-modal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end; 
+  justify-content: center;
+}
+
+header > .header-modal > .exit-header-modal > svg {
+  width: 40px;
+  height: 40px;
+}
+
+header > .header-modal > nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+header > .header-modal > nav > a {
+  color: var(--base-text-color);
+  font-size: var(--base-header-font-size);
+}
+
+@media(min-width: 1024px) {
+  header > .mobile-header {
+    display: none;
+  }
+
+  header > .desktop-header {
+    display: grid;
+  }
+}
+

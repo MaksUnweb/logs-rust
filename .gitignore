@@ -1,0 +1,5 @@
+/target
+/release
+/db
+Cargo.lock
+.env

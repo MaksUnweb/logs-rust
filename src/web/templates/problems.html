@@ -1,0 +1,89 @@
+{% include "header" %}
+<link rel="stylesheet"  href="../static/css/problems.css">
+  <main>
+    {% if message %}
+    <div {% if is_error %} class="notify-modal error-modal" {% else %} class="notify-modal success-modal" {% endif %}>
+      <span>{{ message }}</span>
+      </div>
+    {% endif %}
+
+    <section id="hello-section">
+      <span>Problems</span> 
+      <div class="admin">
+        <span>Anton</span>
+        <div class="background-avatar">
+          <svg width="30" height="30" viewBox="0 0 30 30">
+            <use href="../static/icons/sprite.svg#avatar-icon"></use>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <section id="all-problems">
+      <div class="title">
+        <span>All problems</span>
+        <div class="state">
+          
+        {% if vec_problems %}
+        <div class="indicator-background error-background" >
+          <svg width="23" height="20" viewBox="0 0 23 20">
+            <use href="../static/icons/sprite.svg#error-icon"></use>
+          </svg>
+        </div>
+        {% else %}
+        <div class="indicator-background success-background">
+          <svg  width="24" height="24" viewBox="0 0 24 24">
+            <use href="../static/icons/sprite.svg#success-icon"></use>
+          </svg>
+        </div>
+        {% endif %}
+        </div>
+      </div>
+        
+      <div class="problems-cards">
+        {% if vec_problems %}
+
+          {% for problem in vec_problems %}
+          <div class="problem-card">
+            <svg width="25" height="25" viewBox="0 0 25 25">
+              <use href="../static/icons/sprite.svg#alarm-icon"></use>
+            </svg>
+            <span>{{ problem.text_error }}</span> 
+            <div class="hint-background">
+              <svg width="18" height="18" viewBox="0 0 18 18">
+                <use href="../static/icons/sprite.svg#hint-icon"></use>
+              </svg>
+            </div>
+            <form method="post" action="/api/correction_problem">
+              <input type="hidden" name="id" value="{{problem.id}}">
+              <input type="hidden" name="url_redirect" value="/problems?page{{ current_page }}&page_size={{ page_size }}">
+              <button type="submit" class="correction-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                  <use href="../static/icons/sprite.svg#success-icon"></use>
+                </svg>
+              </button>
+            </form>
+          </div>
+          {% endfor %}
+          {% else %}
+          <div class="none-problems">
+            <span>There are no problems</span>
+          </div>
+        {% endif %}
+      </div>
+      <div class="pagination-btns">
+        {% if current_page > 1 %} 
+        <a href="?page={{ current_page - 1 }}&page_size={{ page_size }}"> Back</a>
+        {% endif %}
+         {% if current_offset < element_count %} 
+        <a href="?page={{ current_page + 1 }}&page_size={{ page_size }}"> Next</a>
+         {% endif %} 
+      </div>
+    </section>
+
+    <div class="hint-block">
+
+    </div>
+  </main>
+  <script type="module" src="../static/js/problems/main.js"></script>
+{% include "footer" %}
+

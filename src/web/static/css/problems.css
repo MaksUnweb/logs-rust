@@ -1,0 +1,231 @@
+
+/* Стили для модального окна с результатом действия (нужно для действия кнопки correction-btn) */
+.notify-modal {
+  opacity: 0;
+  top: 8rem;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.notify-modal > span {
+  color: var(--base-text-color);
+  font-size: var(--base-font-size);
+}
+
+.error-modal {
+  background-color: #FF5050;
+}
+
+.success-modal {
+  background-color: #8BEA00;
+}
+
+
+/* Стили для секции приветствия: */
+#hello-section
+{
+  margin-top: 15vh;
+  width: var(--base-section-size);
+  min-height: 8rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: repeat(1, 1fr);
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: 0px 6px 7px 1px rgba(0, 105, 87, 0.25);
+}
+
+
+#hello-section > span {
+  justify-self: start;
+  margin-left: 1rem;
+  font-size: var(--title-font-size);
+  font-family: "Raleway Bold";
+}
+
+#hello-section > .admin {
+  --admin-margin-right: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  justify-self: end;
+  margin-right: var(--admin-margin-right);
+}
+
+#hello-section > .admin > span {
+  font-size: var(--base-font-size);
+  font-family: "Raleway Bold";
+}
+
+#hello-section > .admin > .background-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00A287;
+  border: 1px solid transparent;
+  border-radius: 50px;
+}
+
+#hello-section > .admin > .background-avatar > svg {
+  --svg-sizes: 40px;
+
+  width: var(--svg-sizes);
+  height: var(--svg-sizes);
+}
+
+
+/* Стили для секции со всеми проблемами: */
+#all-problems {
+  width: var(--base-section-size);
+  min-height: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: 0px 6px 7px 1px rgba(0, 105, 87, 0.25);
+  gap: 2rem;
+  padding: 3rem 0rem 8rem 0rem;
+}
+
+#all-problems > .title {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  align-items: center;
+}
+
+#all-problems > .title > span {
+  justify-self: start;
+  margin-left: 1rem;
+  font-size: var(--title-font-size);
+  font-family: "Raleway Bold";
+}
+
+#all-problems > .title > .state {
+  justify-self: end;
+  margin-right: 1rem;
+}
+
+#all-problems > .title > .state > .indicator-background {
+  border: 1px solid transparent;  
+  border-radius: 50px;
+  padding: 0.3rem;
+}
+
+#all-problems > .title > .state  > .error-background {
+  background-color: #D82D43;
+}
+
+#all-problems > .title > .state  > .success-background {
+  background-color: #00A287;
+}
+
+#all-problems > .problems-cards {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+#all-problems > .problems-cards > .problem-card {
+  --problem-card-padding: 0.5rem 0rem 0.5rem 0rem;
+
+  width: 100%;
+  background-color: var(--accient-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 5px;
+  box-shadow: 0px 6px 5px 1px rgba(0, 0, 0, 0.25);
+  padding: var(--problem-card-padding);
+}
+
+
+#all-problems > .problems-cards > .problem-card > svg {
+  margin-left: 1rem;
+}
+
+#all-problems > .problems-cards > .problem-card > span {
+  font-size: var(--base-font-size);
+  width: var(--problem-card-span-width);
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: var(--base-text-color);
+  font-weight: 800;
+}
+
+#all-problems > .problems-cards > .problem-card > .hint-background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  background-color: #4E51D8;
+  padding: 0.1rem;
+}
+
+#all-problems > .problems-cards > .problem-card > form > .correction-btn {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  background-color: #00A287;
+  padding: 0.4rem;
+}
+
+#all-problems > .problems-cards > .none-problems {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#all-problems > .problems-cards > .none-problems > span {
+  font-size: var(--base-font-size);
+}
+#all-problems > .pagination-btns {
+  margin-top: 3rem;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+#all-problems > .pagination-btns > a {
+  color: black;
+  font-size: var(--base-font-size);
+}
+
+/* Стили для hint-элемента с полным текстом ошибки: */
+
+.hint-block {
+  opacity: 0;
+  display: none;
+  position: fixed;
+  background-color: #4E51D8;
+  min-height: 20vh;
+  width: 60vw;
+  padding: 2rem 0.5rem 2rem 0.5rem;
+  border-radius: 10px;
+}
+
+.hint-block > span {
+  width: 100%;
+  font-size: var(--base-font-size);
+  color: var(--base-text-color);
+  overflow: hidden;
+  text-wrap: wrap;
+}

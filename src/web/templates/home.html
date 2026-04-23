@@ -1,0 +1,72 @@
+{% include "header" %}
+<link rel="stylesheet"  href="../static/css/home.css">
+  <main>
+    <section id="hello-section">
+      <span>Home</span> 
+      <div class="admin">
+        <span>{{ admin_name }}</span>
+        <div class="background-avatar">
+          <svg width="30" height="30" viewBox="0 0 30 30">
+            <use href="../static/icons/sprite.svg#avatar-icon"></use>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <section id="database-speed-section">
+      <div class="first-database">
+        <div class="class-title">
+          <span>Database speed</span> 
+        </div> 
+        <div class="info">
+        </div>
+      </div>
+      <button id="benchmark-test">
+        TEST 
+        <svg width="20" height="20" viewBox="0 0 20 20">
+          <use href="../static/icons/sprite.svg#restart-icon"></use>
+        </svg>
+      </button>
+    </section>
+    <section id="past-problems-section">
+
+      <div class="title">
+        <span>Past problems</span>
+        <div class="state">
+      {% if problems %}        
+        <div class="indicator-background error-background" >
+          <svg width="23" height="20" viewBox="0 0 23 20">
+            <use href="../static/icons/sprite.svg#error-icon"></use>
+          </svg>
+        </div>
+        {% else %}
+        <div class="indicator-background success-background">
+          <svg  width="24" height="24" viewBox="0 0 24 24">
+            <use href="../static/icons/sprite.svg#success-icon"></use>
+          </svg>
+        </div>
+      {% endif %}
+        </div>
+      </div>
+      <div class="problems-cards">
+      {% if problems %}        
+        
+        {% for problem in problems %}
+        <div class="problem-card">
+          <svg width="25" height="25" viewBox="0 0 25 25">
+            <use href="../static/icons/sprite.svg#alarm-icon"></use>
+          </svg>
+          <span>{{ problem.text_error }}</span> 
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="none-problems">
+          <span>There are no problems</span>
+        </div>
+      {% endif %}
+      </div>
+    </section>
+  </main>
+  <div class="notify-modal">
+  </div>
+  <script type="module" src="../static/js/home/main.js"></script>
+{% include "footer" %}

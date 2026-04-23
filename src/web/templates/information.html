@@ -1,0 +1,36 @@
+{% include "header" %}
+<link rel="stylesheet" href="../static/css/information.css">
+  <main>
+    <section id="hello-section">
+      <h1>Documentation for the web interface</h1>
+      <span>
+        Due to the fact that there is a possibility that this web interface will be used by people who are quite far from the programming world.
+        there was a need to make a short guide (overview) of some features.
+      </span>
+    </section>
+    <section id="info-text">
+      <h1>Home page</h1>
+      <span>
+        The home page is the place where the whole work process begins. Interface elements such as 
+        welcome element with the login of the current administrator account: 
+      </span>
+      <img src="../static/images/welcome.png" alt="welcome-image">
+      <span>
+        Next, we can observe a section for testing the database (its speed). The date of the last test is written here 
+        and the request processing speed in milliseconds. To test, you need to click on the "TEST" button:
+      </span>
+      <img src="../static/images/db_test.png" alt="db-test-image">
+      <span>
+        The next element is a list of recent logs (errors). According to this section, we can conclude that
+        the current state of the service that resides in the Docker container:
+      </span>
+      <img src="../static/images/past_problems.png" alt="db-test-image">
+      <h1>Problems page:</h1>
+      <span>
+        This page contains all the issues. They are located based on the time when the erroneous log appeared.
+        There are "Next" and "Back" buttons with which you can scroll through the page (5 elements on one):
+      </span>
+      <img src="../static/images/all_problems.png" alt="db-test-image">
+    </section>
+  </main>
+{% include "footer" %}
