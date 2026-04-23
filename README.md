@@ -36,9 +36,12 @@ Based on the names of the variables, it is clear what exactly they mean.
 4) Get the binary file of the project in `target/release/myapp`.
 
 [!WARNING]  
-Do not forget to create environment variables with valid data, and before launching the project, make sure that the database container, as well as the container from which the logs will be taken, are running and there are no conflicts between ports!
+1) Do not forget to create environment variables with valid data, and before launching the project, make sure that the database container, as well as the container from which the logs will be taken, are running and there are no conflicts between ports!
 
-After launch (at the first launch), the administrator registration script will be launched (please register, otherwise the web interface and the backend for collecting logs will not start and you will not be able to access the web interface!).
+2) After launch (at the first launch), the administrator registration script will be launched (please register, otherwise the web interface and the backend for collecting logs will not start and you will not be able to access the web interface!).
+
+3) If your web interface does not display styles, DevTools shows that the path to the JS/CSS file gives a 404 error, then the fact is that the project must be launched from the root of the project (the place where Cargo.toml is located), since static with all styles is located there!
+
 
 ## Screenshots:
 

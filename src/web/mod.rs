@@ -91,7 +91,7 @@ pub async fn start(pool: PgPool) -> StartResult {
         .fallback(not_found)
         .with_state(state)
         .layer(session_layer)
-        .nest_service("/static", ServeDir::new("src/web/static"));
+        .nest_service("/static", ServeDir::new("static"));
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app.into_make_service()).await.unwrap();
