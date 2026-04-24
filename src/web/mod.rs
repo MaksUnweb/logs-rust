@@ -46,7 +46,7 @@ impl<T, E: std::fmt::Display> CriticalErrors<T> for Result<T, E> {
 }
 
 //Функция для запуска веб-сервера:
-pub async fn start(pool: PgPool) -> StartResult {
+pub async fn start(pool: PgPool, addr: String) -> StartResult {
    let mut env = Environment::new(); 
    env.add_template("header", include_str!("./templates/header.html"))?;
    env.add_template("footer", include_str!("./templates/footer.html"))?;
@@ -93,7 +93,7 @@ pub async fn start(pool: PgPool) -> StartResult {
         .layer(session_layer)
         .nest_service("/static", ServeDir::new("static"));
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
     axum::serve(listener, app.into_make_service()).await.unwrap();
 
    Ok(())

@@ -29,7 +29,11 @@ POSTGRES_PASSWORD=your_password
 POSTGRES_DB=your_database
 CONTAINER_ID=Your_id_container
 DB_URL=postgres://your_login:your_password@your_host/your_database?connect_timeout=your_time_connect
+CONFIG_HOST=your_port
+CONFIG_PORT=your_host
 ```
+At the same time, CONFIG_HOST has syntax `0.0.0.0` and CONFIG_PORT `30000`
+
 Based on the names of the variables, it is clear what exactly they mean.
 
 3) Compile a project using `cargo build --release`.
