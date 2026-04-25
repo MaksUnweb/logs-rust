@@ -29,6 +29,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let pool = connect_db(url).await?;
     let next_pool = pool.clone();
 
+    //Запускаем миграции, если таблиц в базе данных нету, то они будут созданы:
+    match sqlx::migrate!("./migrations").run(&pool).await {
+        Ok(_) => {}
+        Err(e) => {
+            panic!("Ошибка создания миграций: {}", e);
+        }
+    };
+
     //Проверяем, есть ли админ в бд, если нету, то запускается скрипт регистрации прямиков в
     //командной строке:
     init_admin::init(pool.clone()).await?;
@@ -38,12 +46,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         if let Err(e) = log_backend::start(pool.clone()).await {
             eprintln!("Logs crashed: {}", e);
         }
+        println!("Служба логов запущена!");
     });
 
     let web_handler = tokio::spawn(async move{
         if let Err(e) = web::start(next_pool, addr).await {
             eprintln!("Web crashed: {}", e);
          }
+        println!("Служба веб-интерфейса запущена!");
     });
 
 

@@ -71,8 +71,6 @@ pub async fn start(pool: PgPool, addr: String) -> StartResult {
     .with_secure(false) 
     .with_expiry(Expiry::OnInactivity(Duration::hours(1)));
 
-    //Запускаем миграции, если таблиц в базе данных нету, то они будут созданы:
-    sqlx::migrate!("./migrations").run(&pool).await?;
 
    let state = AppState {
         template: Arc::new(env),
