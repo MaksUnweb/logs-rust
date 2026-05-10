@@ -9,7 +9,7 @@ use std::{
 };
 use futures::StreamExt;
 use dotenv::dotenv;
-use sqlx::{PgPool, postgres::PgPoolOptions};
+use sqlx::{Executor, PgPool, Postgres, postgres::PgPoolOptions};
 use tokio::sync::mpsc;
 use log::error;
 use crate::log_backend::errors::LogErrors;
@@ -63,7 +63,10 @@ fn filter_data(data: String) -> Option<String> {
     None
 }
 
-async fn insert_into_db(data: String, pool: PgPool) -> Result<(), LogErrors> {
+
+async fn insert_into_db<'e, E>(data: String, executor: E) -> Result<(), LogErrors> 
+where E: Executor<'e, Database = Postgres>
+{
 
     let data_cloned = data.clone();
 
@@ -82,11 +85,10 @@ async fn insert_into_db(data: String, pool: PgPool) -> Result<(), LogErrors> {
         .bind(true)
         .bind(data)
         .bind(timestamp_str)
-        .execute(&pool)
+        .execute(executor)
         .await?;
     Ok(())
 }
-
 
 pub async fn start(pool: PgPool) -> Result<(), LogErrors>  {
     let (tx, mut rx) = mpsc::channel::<String>(100);
@@ -94,7 +96,7 @@ pub async fn start(pool: PgPool) -> Result<(), LogErrors>  {
     // Создаём отдельный поток для загрузки в бд:
    let _insert_log = tokio::spawn( async move  {
         while let Some(err_log) = rx.recv().await {
-           if let Err(e) = insert_into_db(err_log, pool.clone()).await {
+           if let Err(e) = insert_into_db(err_log, &pool).await {
               error!("{}", e);
             };
         }
@@ -121,19 +123,65 @@ pub async fn start(pool: PgPool) -> Result<(), LogErrors>  {
 }
 
 
-#[cfg(test)]
 mod tests {
     use super::*;
-
 
 #[tokio::test]
     async fn test_filter() {
         let test_data = String::from("[FATAL] [ERROR]");
         let result = filter_data(test_data);
 
-        assert!(result.is_some(), "Обязательно должно быть Some!");
+         assert!(result.is_some(), "The value must be Some()!");
         let err = result.unwrap();
         assert!(err.contains("ERROR") || err.contains("FATAL"));
+    }
+
+
+    #[tokio::test]
+    async fn test_insert() {
+        let pool = connect_to_db().await.expect("Error conneting to db!");
+        let mut transaction = pool.begin().await.expect("Error making transaction");
+        let test_text = String::from("Test_TEST_test_tset!");
+
+
+        insert_into_db(test_text.clone(), &mut *transaction).await.expect("Error insert into DB!");
+
+        check_test_text_into_db(test_text, &mut *transaction).await.expect("The insert function did not insert the data!");
+
+        transaction.rollback().await.expect("Rollback error!");
+
+    }
+
+
+    #[allow(dead_code)]
+    async fn connect_to_db() -> Result<PgPool, sqlx::error::Error> {
+        let pool = PgPoolOptions::new() 
+            .max_connections(5)
+            .acquire_timeout(std::time::Duration::from_secs(3))
+            .connect("postgres://Admin:1111@127.0.0.1:5432/logs_db?connect_timeout=3")
+            .await?;
+        Ok(pool)
+    }
+
+    #[allow(dead_code)]
+    async fn check_test_text_into_db<'e, E>(test_text: String, executor: E) -> Result<(), sqlx::error::Error> 
+    where E: Executor<'e, Database = Postgres>
+    {
+
+        let row: (i64, ) = sqlx::query_as(  
+            r#"
+                SELECT COUNT(*) FROM logs WHERE text_error = $1
+            "#
+            )
+            .bind(test_text)
+            .fetch_one(executor)
+            .await?;
+
+        if row.0 > 0 {
+            return Ok(());
+        }else {
+            return Err(sqlx::Error::RowNotFound);
+        }
     }
 }
 
