@@ -10,7 +10,7 @@ use regex::Regex;
 
 
 static RE_ADMIN_DATA: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"[a-zA-Z0-9_@-]").unwrap()
+    Regex::new(r"^[a-zA-Z0-9_@-]+$").unwrap()
 });
 
 const NOT_VALID: &'static str = "The login or password is not valid!";
@@ -23,6 +23,7 @@ const SERVER_ERROR: &'static str = "The service is temporarily unavailable, plea
 struct ValidateData {
     #[validate(regex(path = *RE_ADMIN_DATA))]
     login: String,
+    #[validate(regex(path = *RE_ADMIN_DATA))]
     password: String
 }
 
@@ -138,4 +139,41 @@ async fn password_verify(password: String, password_hash: String) -> Result<bool
         Ok(argon2.verify_password(password.as_bytes(), &parsed_hash).is_ok())
     })
     .await?
+}
+
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_validate_data() {
+        let login = String::from("Test");
+        let password = String::from("password");
+            
+        match validate_data(login, password).await {
+            Ok(()) => {
+            }
+            Err(e) => {
+                panic!("Error test validate data: {}", e);
+            }
+        }
+    }
+
+    #[tokio::test]
+    async fn test_password_verify() {
+        let base_pass = "test_pass1223";
+        let hash_password = "$argon2id$v=19$m=19456,t=2,p=1$nhwUuiERXNQdpVNXLx77FQ$wRR7DzVAaYRxwZPX03iz7XtvGMP3r+9RglfrdfuC4PQ";
+
+        match password_verify(base_pass.to_string(), hash_password.to_string()).await {
+            Ok(true) => {
+
+            }
+            Ok(false) => {
+                panic!("Error verifyng password!");
+            }
+            Err(e) => {
+                panic!("Error verifyng password: {}", e);
+            }
+        }
+    }
+
 }
