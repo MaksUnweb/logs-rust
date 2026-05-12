@@ -3,14 +3,13 @@ use serde_json::json;
 use tokio::time::Instant;
 use std::time::Duration;
 use std::collections::HashMap;
-use sqlx::Row;
+use sqlx::{Database, Executor, Postgres, Row};
 
 //Функция для проверки скорости выборки из базы данных, 
 //необходимо для примерного понимания скорости работы всей бд в целом
 pub async fn test_speed(State(state): State<AppState>) -> impl IntoResponse {
 
     let pool = state.pool;
-    let cloned_pool = pool.clone();
     let iterations = 1000;
 
     let start = Instant::now();
@@ -28,7 +27,7 @@ pub async fn test_speed(State(state): State<AppState>) -> impl IntoResponse {
 
 
     //Запускаем вставку в базу данных:
-    match insert_into_db(cloned_pool, avg_ms).await {
+    match insert_into_db(&*pool, &avg_ms).await {
         Ok(()) => {
             (
             StatusCode::OK,
@@ -105,11 +104,13 @@ fn recalculation_units(avg: Duration) -> f64 {
 }
 
 //Функция для внесения данных о последнем тесте в бд:
-async fn insert_into_db(pool: Arc<PgPool>, time: f64) -> Result<(), sqlx::error::Error> {
+async fn insert_into_db<'e, E>(executor: E, time: &f64) -> Result<(), sqlx::error::Error>
+where E: Executor<'e, Database = Postgres>
+{
 
     let _sql = sqlx::query("INSERT INTO speed_test (time) VALUES ($1)")
         .bind(time)
-        .execute(&*pool)
+        .execute(executor)
         .await?;
 
     Ok(())
@@ -117,7 +118,9 @@ async fn insert_into_db(pool: Arc<PgPool>, time: f64) -> Result<(), sqlx::error:
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use sqlx::postgres::PgPoolOptions;
+
+use super::*;
 
     #[tokio::test]
     async fn test_recalculation() {
@@ -126,6 +129,51 @@ mod tests {
         let true_value = 0.058;
         assert_eq!(avg_ms, true_value);
     }
-}
 
+    //Test for check working function for insert benchmark data:
+    #[tokio::test]
+    async fn test_insert_data() {
+        let pool = connection_to_db().await.expect("Error connecting to db! Please check Database or Auth data!");
+        let mut transaction = pool.begin().await.expect("Error creating transaction!");
+        let test_time: f64 = 1111.11;
+        //Start inserting test time:
+        insert_into_db(&mut *transaction, &test_time).await.expect("Error inserting data!");
+        //Check test time in db, if isset, test completed:
+        match check_inserted_time(&mut *transaction, &test_time).await {
+            Ok(_) => {}
+            Err(e) => {
+                panic!("The test failed! Check error: {}", e);
+            }
+        }
+
+        transaction.rollback().await.expect("Error rollback transaction!");
+    }
+
+    async fn connection_to_db() -> Result<PgPool, sqlx::error::Error> {
+        let pool = PgPoolOptions::new() 
+            .max_connections(5)
+            .acquire_timeout(std::time::Duration::from_secs(3))
+            .connect("postgres://Admin:1111@127.0.0.1:5432/logs_db?connection_timeout=3")
+            .await?;
+        Ok(pool)
+    }
+
+    async fn check_inserted_time<'e, E>(executor: E, time: &f64) -> Result<(), sqlx::error::Error>
+    where E: Executor<'e, Database = Postgres>
+    {
+        let count: i64 = sqlx::query_scalar(r#"
+            SELECT COUNT(*) FROM speed_test WHERE time = $1
+            "#)
+            .bind(time)
+            .fetch_one(executor)
+            .await?;
+
+        if count > 0 {
+            return Ok(());
+        }else {
+        dbg!(count);
+             return Err(sqlx::Error::RowNotFound);
+        }
+    }
+}
 
